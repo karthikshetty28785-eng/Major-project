@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SecureBank — Transactions</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; }
+    .nav { background: #1a3c6e; color: white; padding: 14px 24px; display: flex; justify-content: space-between; }
+    .nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; }
+    .content { padding: 30px; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th { background: #1a3c6e; color: white; padding: 12px; text-align: left; }
+    td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+    h2 { color: #1a3c6e; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <span>SecureBank Portal</span>
+    <div>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/transactions">Transactions</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+  <div class="content">
+    <h2>Recent Transactions</h2>
+    <table>
+      <tr><th>ID</th><th>Account</th><th>Amount (₹)</th><th>Type</th><th>Date</th></tr>
+      {% for t in txns %}
+      <tr>
+        <td>{{ t[0] }}</td>
+        <td>{{ t[1] }}</td>
+        <td>{{ "{:,.2f}".format(t[2]) }}</td>
+        <td>{{ t[3] }}</td>
+        <td>{{ t[4] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

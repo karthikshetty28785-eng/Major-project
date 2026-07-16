@@ -1,0 +1,38 @@
+
+services:
+  honeypot-db:
+    image: postgres:15
+    container_name: honeypot_db
+    environment:
+      POSTGRES_USER: bankuser
+      POSTGRES_PASSWORD: bankpass123
+      POSTGRES_DB: fakebank
+    ports:
+      - "5433:5432"
+    volumes:
+      - honeypot_data:/var/lib/postgresql/data
+    networks:
+      - honeypot_net
+
+  honeypot-app:
+    build: ./honeypot
+    container_name: honeypot_app
+    depends_on:
+      - honeypot-db
+    environment:
+      DB_HOST: honeypot-db
+      DB_PORT: 5432
+      DB_NAME: fakebank
+      DB_USER: bankuser
+      DB_PASS: bankpass123
+    ports:
+      - "5000:5000"
+    networks:
+      - honeypot_net
+
+networks:
+  honeypot_net:
+    driver: bridge
+
+volumes:
+  honeypot_data:
